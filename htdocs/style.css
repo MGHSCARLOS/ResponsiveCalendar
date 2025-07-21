@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.6;
+  background: #c5ddc0;
+  color: #333;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent main from restricting layout */
+main {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow-y: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+}
+
+.calendar-clock-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  box-sizing: border-box;
+}
+  
+
+.calendar, .clock {
+  background: #99c59f;
+  padding: 2rem;
+  border-radius: 15px;
+  
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.calendar .wrapper, .clock .wrapper {
+  width: 300px;
+}
+.calendar header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header .icons {
+  display: flex;
+}
+header .icons span {
+  width: 38px;
+  height: 38px;
+  margin: 0 1px;
+  cursor: pointer;
+  color: #878787;
+  text-align: center;
+  line-height: 38px;
+  font-size: 1.9rem;
+  border-radius: 50%;
+}
+header .icons span:hover {
+  background: #f2f2f2;
+  color: #000;
+}
+header .current-date {
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+.calendar-content ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.calendar-content .weeks li,
+.calendar-content .days li {
+  width: calc(100% / 7);
+  font-size: 1.07rem;
+}
+.calendar-content .days {
+  margin-bottom: 20px;
+}
+.calendar-content .days li {
+  z-index: 1;
+  cursor: pointer;
+  position: relative;
+  margin-top: 30px;
+}
+.days li.inactive {
+  color: #aaa;
+}
+.days li.active {
+  color: #fff;
+}
+.days li::before {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+.days li.active::before {
+  background: #e2d955;
+}
+.days li:not(.active):hover::before {
+  background: #e4e1e1;
+}
+.clock .display {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.credits {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+.credits a {
+  color: #9B59B6;
+  text-decoration: none;
+}
+.credits a:hover {
+  text-decoration: underline;
+}
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+.tab-button {
+  background: #2d2d2d;
+  border: none;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.tab-button.active {
+  background: #9B59B6;
+}
+.tab-content.hidden {
+  display: none;
+}
+.controls {
+  margin-top: 1rem;
+  text-align: center;
+}
+.controls input {
+  padding: 0.4rem;
+  width: 140px;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  border: none;
+}
+.controls button {
+  margin: 0 0.3rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.controls button:hover {
+  background: #c5e41a;
+}
+.event-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.event-modal-content {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+}
+.event-modal-content h3 {
+  margin-bottom: 10px;
+}
+.event-modal-content input {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.event-buttons button {
+  margin: 0 5px;
+  padding: 8px 12px;
+  background-color: #d8cf4a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+.event-buttons button:hover {
+  background-color: #c6d160;
+}
+.hidden {
+  display: none;
+}
+.event-indicator {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.8rem;
+  color: rgb(184, 11, 11);
+}
+.time-log {
+  margin-top: 20px;
+  padding: 20px;
+  background: #53ce6e;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.time-log .display {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.time-log .controls {
+  margin-top: 15px;
+}
+
+.time-log .controls button {
+  background-color: #609e6a;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin: 5px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.time-log .controls button:hover {
+  background-color: #000000;
+}
+
+.todo-list-container {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f0f8ff;
+  border-radius: 10px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.todo-list-container h3 {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  color: #333;
+  text-align: center;
+}
+
+#todoList {
+  list-style: none;
+  padding: 0;
+}
+
+#todoList li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 10px 15px;
+  background: #1f8612;
+  margin-bottom: 8px;
+  border-left: 5px solid #e65b5b;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+#todoList button {
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.login-container {
+  max-width: 400px;
+  margin: 100px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.login-container input,
+.login-container select,
+.login-container button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+
+.navbar-title {
+  font-size: 3rem;
+  font-weight: bold;
+   color: #fff;
+  text-align: center;
+}
+
+.logout-form {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.logout-button {
+  padding: 10px 18px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
+
+
+/* Navigation Bar Styles */
+.navbar {
+  background-color: #2c3e50;
+  overflow: hidden;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+/* Floating Logout Button */
+.floating-logout {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
+
+.floating-logout:hover {
+  background-color: #c0392b;
+}
+
+
+.admin {
+  font-family: 'Poppins', sans-serif;
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 40px 60px;
+  color: #2c3e50;
+}
+
+.admin h2 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  border-left: 6px solid #2980b9;
+  padding-left: 15px;
+  color: #2980b9;
+}
+
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #34495e;
+  padding: 15px 30px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  color: white;
+}
+
+.admin-navbar a {
+  color: #ecf0f1;
+  text-decoration: none;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.admin-navbar a:hover {
+  text-decoration: underline;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+}
+
+.admin-table th {
+  background-color: #2c3e50;
+  color: white;
+  text-align: left;
+}
+
+.admin-table tr:hover {
+  background-color: #ecf0f1;
+}
+
+.admin-delete-btn {
+  background-color: #e67e22;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.admin-delete-btn:hover {
+  background-color: #d35400;
+}
+
+.main-banner {
+  
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
